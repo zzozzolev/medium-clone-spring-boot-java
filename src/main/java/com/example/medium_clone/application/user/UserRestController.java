@@ -10,4 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/users")
 public class UserRestController {
 
+    @PostMapping("/register")
+    public UserRegisterDto registerUser(@RequestBody UserRegisterDto dto) {
+        return dto;
+    }
 }
