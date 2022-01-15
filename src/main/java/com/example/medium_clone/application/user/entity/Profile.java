@@ -19,4 +19,11 @@ public class Profile {
     private String bio;
     private String username;
 
+    public static Profile createProfile(String bio, String username) {
+        Profile profile = new Profile();
+        profile.bio = bio;
+        profile.username = username;
+
+        return profile;
+    }
 }
