@@ -20,4 +20,12 @@ public class User {
     @JoinColumn(name = "profile_id")
     private Profile profile;
 
+    public static User createUser(String password, String email, Profile profile) {
+        User user = new User();
+        user.password = password;
+        user.email = email;
+        user.profile = profile;
+
+        return user;
+    }
 }
