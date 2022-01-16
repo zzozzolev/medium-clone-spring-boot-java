@@ -1,9 +1,10 @@
 package com.example.medium_clone.application.user;
 
-import com.example.medium_clone.application.user.dto.ProfileDto;
+import com.example.medium_clone.application.user.dto.ProfileUpdateDto;
 import com.example.medium_clone.application.user.entity.Profile;
 import com.example.medium_clone.application.user.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
@@ -21,10 +22,7 @@ public class ProfileRestController {
     }
 
     @PatchMapping("/{username}")
-    public ProfileDto updateProfile(@PathVariable String username) {
-        ProfileDto dto = new ProfileDto();
-        dto.setUsername("demo");
-        dto.setBio("demo");
-        return dto;
+    public ResponseEntity<Profile> updateProfile(@PathVariable String username, @RequestBody ProfileUpdateDto dto) {
+        return ResponseEntity.noContent().build();
     }
 }
