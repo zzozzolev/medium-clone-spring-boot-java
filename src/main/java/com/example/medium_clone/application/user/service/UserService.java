@@ -26,7 +26,7 @@ public class UserService {
                     profile
                 );
 
-        userRepository.save(user);
-        return user.getId();
+        User savedUser = userRepository.save(user);
+        return savedUser.getId();
     }
 }
