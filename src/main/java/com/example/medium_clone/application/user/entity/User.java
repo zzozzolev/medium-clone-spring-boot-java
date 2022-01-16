@@ -16,7 +16,7 @@ public class User {
     private String password;
     private String email;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id")
     private Profile profile;
 
