@@ -1,4 +1,4 @@
-package com.example.medium_clone.application.user;
+package com.example.medium_clone.application.user.controller;
 
 import com.example.medium_clone.application.user.dto.UserRegisterDto;
 import com.example.medium_clone.application.user.entity.User;
