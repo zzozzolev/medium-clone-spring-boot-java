@@ -5,13 +5,8 @@ import com.example.medium_clone.application.user.entity.User;
 import com.example.medium_clone.application.user.repository.UserRepository;
 import com.example.medium_clone.application.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.persistence.NoResultException;
-import java.util.Optional;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController()
 @RequiredArgsConstructor
@@ -22,8 +17,9 @@ public class UserRestController {
     private final UserRepository userRepository;
 
     @PostMapping("/register")
+    @ResponseStatus(HttpStatus.CREATED)
     public User registerUser(@RequestBody UserRegisterDto dto) {
         Long memberId = userService.join(dto);
-        return userRepository.findById(memberId).orElseThrow(NoResultException::new);
+        return userRepository.findById(memberId).orElseThrow(IllegalStateException::new);
     }
 }
