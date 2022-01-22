@@ -1,9 +1,10 @@
-package com.example.medium_clone.application.user;
+package com.example.medium_clone.application.user.controller;
 
 import com.example.medium_clone.application.user.dto.ProfileUpdateDto;
 import com.example.medium_clone.application.user.entity.Profile;
 import com.example.medium_clone.application.user.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
