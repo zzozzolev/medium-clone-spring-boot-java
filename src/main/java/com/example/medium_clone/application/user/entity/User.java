@@ -1,5 +1,6 @@
 package com.example.medium_clone.application.user.entity;
 
+import com.example.medium_clone.application.common.entity.BaseTimeEntity;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -8,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @ToString(of = {"id", "email"})
-public class User {
+public class User extends BaseTimeEntity {
 
     @Id @GeneratedValue
     @Column(name = "user_id")
