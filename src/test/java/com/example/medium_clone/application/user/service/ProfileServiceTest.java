@@ -41,6 +41,25 @@ class ProfileServiceTest {
         assertThat(profile.getUsername()).isEqualTo(updatedUsername);
     }
 
+    @Test
+    public void testUpdateBio() {
+        // given
+        String username = "test";
+        String updatedBio = "bio";
+        Profile profile = getProfile(username);
+        ProfileUpdateDto dto = new ProfileUpdateDto();
+        dto.setBio(updatedBio);
+
+        // mocking
+        setRepoMocking(username, profile);
+
+        // when
+        profileService.update(username, dto);
+
+        // then
+        assertThat(profile.getBio()).isEqualTo(updatedBio);
+    }
+
     private void setRepoMocking(String username, Profile profile) {
         when(profileRepository.findByUsername(username)).thenReturn(Optional.of(profile));
     }
