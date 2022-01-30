@@ -27,4 +27,12 @@ public class Profile extends BaseTimeEntity {
 
         return profile;
     }
+
+    public void changeBio(String bio) {
+        this.bio = bio;
+    }
+
+    public void changeUsername(String username) {
+        this.username = username;
+    }
 }
