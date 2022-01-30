@@ -60,6 +60,31 @@ class ProfileServiceTest {
         assertThat(profile.getBio()).isEqualTo(updatedBio);
     }
 
+    @Test
+    /*
+      업데이트하는 필드만 업데이트 되고 나머지 필드는 null로 바뀌지 않는지 테스트한다.
+     */
+    public void testUpdateNotNull() {
+        // given
+        String username = "test";
+        String updatedBio = "bio";
+        Profile profile = getProfile(username);
+        ProfileUpdateDto dto = new ProfileUpdateDto();
+        dto.setBio(updatedBio);
+
+        // mocking
+        setRepoMocking(username, profile);
+
+        // when
+        profileService.update(username, dto);
+
+        // then
+        // dto의 username이 null일 때, 즉 username은 요청 body에 없을 때
+        // 원래의 username이 null로 바뀌지 않는지 확인한다.
+        assertThat(dto.getUsername()).isEmpty();
+        assertThat(profile.getUsername()).isNotNull();
+    }
+
     private void setRepoMocking(String username, Profile profile) {
         when(profileRepository.findByUsername(username)).thenReturn(Optional.of(profile));
     }
