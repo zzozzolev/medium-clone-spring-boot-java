@@ -1,5 +1,8 @@
 package com.example.medium_clone.application.user.service;
 
+import com.example.medium_clone.application.user.dto.ProfileUpdateDto;
+import com.example.medium_clone.application.user.entity.Profile;
+import com.example.medium_clone.application.user.exception.ProfileNotFoundException;
 import com.example.medium_clone.application.user.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,4 +16,13 @@ public class ProfileService {
 
     private final ProfileRepository profileRepository;
 
+    @Transactional
+    public void update(String username, ProfileUpdateDto dto) {
+        Profile profile = profileRepository.findByUsername(username).orElseThrow(
+                () -> new ProfileNotFoundException(username)
+        );
+
+        dto.getUsername().ifPresent(profile::changeUsername);
+        dto.getBio().ifPresent(profile::changeBio);
+    }
 }
