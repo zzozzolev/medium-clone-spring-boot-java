@@ -17,12 +17,14 @@ public class ProfileService {
     private final ProfileRepository profileRepository;
 
     @Transactional
-    public void update(String username, ProfileUpdateDto dto) {
+    public Long update(String username, ProfileUpdateDto dto) {
         Profile profile = profileRepository.findByUsername(username).orElseThrow(
                 () -> new ProfileNotFoundException(username)
         );
 
         dto.getUsername().ifPresent(profile::changeUsername);
         dto.getBio().ifPresent(profile::changeBio);
+
+        return profile.getId();
     }
 }
