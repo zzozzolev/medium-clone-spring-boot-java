@@ -24,12 +24,13 @@ class ArticleTest {
         // given
         // hyphen 길이가 더해져서 1을 추가로 빼줘야한다.
         String title = "a".repeat(maxSize - size - 1);
+        Article article = new Article();
 
         // when
-        String slug = Article.getSlugWithTitle(slugify, generator, title, size, maxSize);
+        article.setSlug(slugify, generator, title, size, maxSize);
 
         // then
-        assertThat(slug.length()).isEqualTo(maxSize);
+        assertThat(article.getSlug().length()).isEqualTo(maxSize);
     }
 
     /*
@@ -41,12 +42,13 @@ class ArticleTest {
         // given
         // hyphen 길이가 더해져서 1을 추가로 빼주지 않아도 된다.
         String title = "a".repeat(maxSize - size);
+        Article article = new Article();
 
         // when
-        String slug = Article.getSlugWithTitle(slugify, generator, title, size, maxSize);
+        article.setSlug(slugify, generator, title, size, maxSize);
 
         // then
-        assertThat(slug.length()).isEqualTo(maxSize);
+        assertThat(article.getSlug().length()).isEqualTo(maxSize);
     }
 
 }

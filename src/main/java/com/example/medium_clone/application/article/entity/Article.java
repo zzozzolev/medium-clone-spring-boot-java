@@ -31,7 +31,7 @@ public class Article extends BaseTimeEntity {
         Article article = new Article();
         article.setAuthor(author);
         article.title = title;
-        article.slug = getSlugWithTitle(slugify, generator, title, size, maxSize);
+        article.setSlug(slugify, generator, title, size, maxSize);
         article.body = body;
         article.description = description;
 
@@ -43,7 +43,7 @@ public class Article extends BaseTimeEntity {
         author.getArticles().add(this);
     }
 
-    public static String getSlugWithTitle(Slugify slugify, RandomStringGenerator generator, String title, int size, int maxSize) {
+    public void setSlug(Slugify slugify, RandomStringGenerator generator, String title, int size, int maxSize) {
         String slug = slugify.slugify(title);
         String randomString = generator.getRandomString(size);
 
@@ -53,6 +53,6 @@ public class Article extends BaseTimeEntity {
             slug = slug.substring(0, maxSize - randomHyphenSize);
         }
 
-        return slug + "-" + randomString;
+        this.slug = slug + "-" + randomString;
     }
 }
