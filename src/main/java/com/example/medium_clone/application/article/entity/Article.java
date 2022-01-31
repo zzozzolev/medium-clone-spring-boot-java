@@ -35,9 +35,6 @@ public class Article extends BaseTimeEntity {
         // slug 길이와 랜덤 스트링 길이의 합이 최대 길이보다 큰 경우
         if (slug.length() + randomHyphenSize > maxSize) {
             slug = slug.substring(0, maxSize - randomHyphenSize);
-            if (slug.charAt(slug.length() - 1) == '-') {
-                slug = slug.substring(0, slug.length() - 1);
-            }
         }
 
         this.slug = slug + "-" + randomString;
