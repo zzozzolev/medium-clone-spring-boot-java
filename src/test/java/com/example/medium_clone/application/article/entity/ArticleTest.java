@@ -33,4 +33,22 @@ class ArticleTest {
         assertThat(article.getSlug().length()).isEqualTo(maxSize);
     }
 
+    /*
+    slug.length() + randomHyphenSize == maxSize + 1
+    substring 처리하는 경우
+     */
+    @Test
+    public void testSetSlugWithTitleGreaterLength() {
+        // given
+        // hyphen 길이가 더해져서 1을 추가로 빼주지 않아도 된다.
+        String title = "a".repeat(maxSize - size);
+        Article article = new Article();
+
+        // when
+        article.setSlugWithTitle(slugify, generator, title, size, maxSize);
+
+        // then
+        assertThat(article.getSlug().length()).isEqualTo(maxSize);
+    }
+
 }
