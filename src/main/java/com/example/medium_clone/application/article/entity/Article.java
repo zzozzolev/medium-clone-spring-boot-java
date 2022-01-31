@@ -29,13 +29,18 @@ public class Article extends BaseTimeEntity {
 
     public static Article createArticle(Profile author, String title, String body, String description, Slugify slugify, RandomStringGenerator generator, int size, int maxSize) {
         Article article = new Article();
-        article.author = author;
+        article.setAuthor(author);
         article.title = title;
         article.slug = getSlugWithTitle(slugify, generator, title, size, maxSize);
         article.body = body;
         article.description = description;
 
         return article;
+    }
+
+    public void setAuthor(Profile author) {
+        this.author = author;
+        author.getArticles().add(this);
     }
 
     public static String getSlugWithTitle(Slugify slugify, RandomStringGenerator generator, String title, int size, int maxSize) {
