@@ -8,8 +8,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RandomStringGeneratorTest {
 
+    /*
+    연속으로 두 번 만든 랜던 스트링이 서로 다른지 확인한다.
+     */
     @Test
-    public void test() {
+    public void testRandomness() {
         // given
         RandomStringGenerator generator = new RandomStringGenerator();
 
