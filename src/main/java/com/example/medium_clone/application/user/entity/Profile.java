@@ -18,6 +18,7 @@ public class Profile extends BaseTimeEntity {
     @Column(name = "profile_id")
     private Long id;
     private String bio;
+    @Column(nullable = false)
     private String username;
 
     public static Profile createProfile(String bio, String username) {

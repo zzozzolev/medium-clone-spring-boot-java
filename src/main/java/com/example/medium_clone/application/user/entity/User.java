@@ -14,7 +14,9 @@ public class User extends BaseTimeEntity {
     @Id @GeneratedValue
     @Column(name = "user_id")
     private Long id;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private String email;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
