@@ -14,6 +14,8 @@ import javax.persistence.*;
 @ToString(of = {"id", "slug"})
 public class Article extends BaseTimeEntity {
 
+    public static final int BODY_LENGTH = 255 * 4;
+
     @Id @GeneratedValue
     @Column(name = "article_id")
     private Long id;
@@ -22,8 +24,11 @@ public class Article extends BaseTimeEntity {
     @JoinColumn(name = "profile_id")
     private Profile author;
 
+    @Column(nullable = false)
     private String title;
+    @Column(nullable = false)
     private String slug;
+    @Column(nullable = false, length = BODY_LENGTH)
     private String body;
     private String description;
 
