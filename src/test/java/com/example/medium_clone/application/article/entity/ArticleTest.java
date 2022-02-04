@@ -1,17 +1,13 @@
 package com.example.medium_clone.application.article.entity;
 
-import com.example.medium_clone.application.common.util.RandomStringGenerator;
 import com.github.slugify.Slugify;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ArticleTest {
 
     private static final Slugify slugify = new Slugify();
-    private static final RandomStringGenerator generator = new RandomStringGenerator();
     private static final int size = 12;
     private static final int maxSize = 300;
 
@@ -27,7 +23,7 @@ class ArticleTest {
         Article article = new Article();
 
         // when
-        article.setSlug(slugify, generator, title, size, maxSize);
+        article.setSlug(slugify, title, size, maxSize);
 
         // then
         assertThat(article.getSlug().length()).isEqualTo(maxSize);
@@ -45,7 +41,7 @@ class ArticleTest {
         Article article = new Article();
 
         // when
-        article.setSlug(slugify, generator, title, size, maxSize);
+        article.setSlug(slugify, title, size, maxSize);
 
         // then
         assertThat(article.getSlug().length()).isEqualTo(maxSize);

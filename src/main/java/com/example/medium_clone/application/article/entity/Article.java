@@ -1,11 +1,11 @@
 package com.example.medium_clone.application.article.entity;
 
 import com.example.medium_clone.application.common.entity.BaseTimeEntity;
-import com.example.medium_clone.application.common.util.RandomStringGenerator;
 import com.example.medium_clone.application.user.entity.Profile;
 import com.github.slugify.Slugify;
 import lombok.Getter;
 import lombok.ToString;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.persistence.*;
 
@@ -27,11 +27,11 @@ public class Article extends BaseTimeEntity {
     private String body;
     private String description;
 
-    public static Article createArticle(Profile author, String title, String body, String description, Slugify slugify, RandomStringGenerator generator, int size, int maxSize) {
+    public static Article createArticle(Profile author, String title, String body, String description, Slugify slugify, int size, int maxSize) {
         Article article = new Article();
         article.setAuthor(author);
         article.title = title;
-        article.setSlug(slugify, generator, title, size, maxSize);
+        article.setSlug(slugify, title, size, maxSize);
         article.body = body;
         article.description = description;
 
@@ -43,9 +43,9 @@ public class Article extends BaseTimeEntity {
         author.getArticles().add(this);
     }
 
-    public void setSlug(Slugify slugify, RandomStringGenerator generator, String title, int size, int maxSize) {
+    public void setSlug(Slugify slugify, String title, int size, int maxSize) {
         String slug = slugify.slugify(title);
-        String randomString = generator.getRandomString(size);
+        String randomString = RandomStringUtils.randomAlphanumeric(size);
 
         int randomHyphenSize = randomString.length() + 1;
         // slug 길이와 랜덤 스트링 길이의 합이 최대 길이보다 큰 경우
