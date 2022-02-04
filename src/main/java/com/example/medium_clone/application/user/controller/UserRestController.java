@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/users")
@@ -18,7 +20,7 @@ public class UserRestController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public User registerUser(@RequestBody UserRegisterDto dto) {
+    public User registerUser(@RequestBody @Valid UserRegisterDto dto) {
         Long memberId = userService.join(dto);
         return userRepository.findById(memberId).orElseThrow(IllegalStateException::new);
     }
