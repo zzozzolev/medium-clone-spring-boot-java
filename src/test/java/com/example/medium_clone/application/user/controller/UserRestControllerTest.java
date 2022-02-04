@@ -59,4 +59,57 @@ class UserRestControllerTest {
                 .andExpect(status().isCreated());
     }
 
+    @Test
+    public void testUsernameBlank400() throws Exception {
+        // given
+        UserRegisterDto dto = getUserRegisterDto();
+        dto.setUsername("");
+        String body = objectMapper.writeValueAsString(dto);
+
+        // then
+        mockMvc.perform(post(commonPath + "/register")
+                        .content(body)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testPasswordBlank400() throws Exception {
+        // given
+        UserRegisterDto dto = getUserRegisterDto();
+        dto.setPassword("");
+        String body = objectMapper.writeValueAsString(dto);
+
+        // then
+        mockMvc.perform(post(commonPath + "/register")
+                        .content(body)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testInvalidEmail400() throws Exception {
+        // given
+        UserRegisterDto dto = getUserRegisterDto();
+        dto.setEmail("test");
+        String body = objectMapper.writeValueAsString(dto);
+
+        // then
+        mockMvc.perform(post(commonPath + "/register")
+                        .content(body)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    private UserRegisterDto getUserRegisterDto() {
+        UserRegisterDto dto = new UserRegisterDto();
+        dto.setUsername("test");
+        dto.setPassword("password");
+        dto.setEmail("test@email.com");
+        return dto;
+    }
+
 }
