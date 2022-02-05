@@ -50,6 +50,62 @@ class ArticleTest {
     }
 
     @Test
+    public void testSetSlugSlugifyNonNull() {
+        // given
+        Article article = new Article();
+        Slugify slugify = null;
+        String title = "title";
+        int size = 10;
+        int maxSize = 20;
+
+        Assertions.assertThrows(NullPointerException.class, () -> article.setSlug(slugify, title, size, maxSize));
+    }
+
+    @Test
+    public void testSetSlugTitleNotBlank() {
+        // given
+        Article article = new Article();
+        String title = " ";
+        int size = 10;
+        int maxSize = 20;
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> article.setSlug(slugify, title, size, maxSize));
+    }
+
+    @Test
+    public void testSetSlugSizeGtZero() {
+        // given
+        Article article = new Article();
+        String title = " ";
+        int size = 0;
+        int maxSize = 20;
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> article.setSlug(slugify, title, size, maxSize));
+    }
+
+    @Test
+    public void testSetSlugMaxSizeGtZero() {
+        // given
+        Article article = new Article();
+        String title = " ";
+        int size = 10;
+        int maxSize = 0;
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> article.setSlug(slugify, title, size, maxSize));
+    }
+
+    @Test
+    public void testSetSlugMaxSizeGteSize() {
+        // given
+        Article article = new Article();
+        String title = " ";
+        int size = 10;
+        int maxSize = 9;
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> article.setSlug(slugify, title, size, maxSize));
+    }
+
+    @Test
     public void testSetAuthorNonNull() {
         // given
         Profile profile = null;
