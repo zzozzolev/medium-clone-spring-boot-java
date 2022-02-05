@@ -18,6 +18,17 @@ public class Article extends BaseTimeEntity {
 
     public static final int BODY_LENGTH = 255 * 4;
 
+    public static Article createArticle(Profile author, String title, String body, String description, Slugify slugify, int size, int maxSize) {
+        Article article = new Article();
+        article.setAuthor(author);
+        article.title = title;
+        article.setSlug(slugify, title, size, maxSize);
+        article.body = body;
+        article.description = description;
+
+        return article;
+    }
+
     @Id @GeneratedValue
     @Column(name = "article_id")
     private Long id;
@@ -33,17 +44,6 @@ public class Article extends BaseTimeEntity {
     @Column(nullable = false, length = BODY_LENGTH)
     private String body;
     private String description;
-
-    public static Article createArticle(Profile author, String title, String body, String description, Slugify slugify, int size, int maxSize) {
-        Article article = new Article();
-        article.setAuthor(author);
-        article.title = title;
-        article.setSlug(slugify, title, size, maxSize);
-        article.body = body;
-        article.description = description;
-
-        return article;
-    }
 
     /**
      * Set author to this article instance.
