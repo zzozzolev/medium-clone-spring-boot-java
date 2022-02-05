@@ -1,6 +1,8 @@
 package com.example.medium_clone.application.article.entity;
 
+import com.example.medium_clone.application.user.entity.Profile;
 import com.github.slugify.Slugify;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,6 +47,16 @@ class ArticleTest {
 
         // then
         assertThat(article.getSlug().length()).isEqualTo(maxSize);
+    }
+
+    @Test
+    public void testSetAuthorNonNull() {
+        // given
+        Profile profile = null;
+        Article article = new Article();
+
+        // when, then
+        Assertions.assertThrows(NullPointerException.class, () -> article.setAuthor(profile));
     }
 
 }
