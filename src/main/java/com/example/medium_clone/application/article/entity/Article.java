@@ -65,7 +65,6 @@ public class Article extends BaseTimeEntity {
      * @param title article title.
      * @param size Length of random string.
      * @param maxSize Total length of slug and random string.
-     * @throws IllegalArgumentException
      */
     void setSlug(Slugify slugify, String title, int size, int maxSize) throws IllegalArgumentException {
         // Validate parameters.
