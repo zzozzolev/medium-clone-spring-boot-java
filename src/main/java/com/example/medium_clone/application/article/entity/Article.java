@@ -51,7 +51,7 @@ public class Article extends BaseTimeEntity {
      * @param author Profile instance.
      */
     void setAuthor(Profile author) {
-        Objects.requireNonNull(author);
+        Objects.requireNonNull(author, "author");
         this.author = author;
         author.getArticles().add(this);
     }
