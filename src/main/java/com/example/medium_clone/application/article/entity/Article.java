@@ -50,7 +50,7 @@ public class Article extends BaseTimeEntity {
      * Add this article to author's article list.
      * @param author Profile instance.
      */
-    public void setAuthor(Profile author) {
+    void setAuthor(Profile author) {
         Objects.requireNonNull(author);
         this.author = author;
         author.getArticles().add(this);
@@ -67,7 +67,7 @@ public class Article extends BaseTimeEntity {
      * @param maxSize Total length of slug and random string.
      * @throws IllegalArgumentException
      */
-    public void setSlug(Slugify slugify, String title, int size, int maxSize) throws IllegalArgumentException {
+    void setSlug(Slugify slugify, String title, int size, int maxSize) throws IllegalArgumentException {
         // Validate parameters.
         Objects.requireNonNull(slugify);
         if (StringUtils.isBlank(title)) {
