@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 @Service
 // Default transaction mode is read only.
 @Transactional(readOnly = true)
@@ -26,5 +28,16 @@ public class ProfileService {
         dto.getBio().ifPresent(profile::changeBio);
 
         return profile.getId();
+    }
+
+    /**
+     * Find a Profile matched with username.
+     * @return Profile instance.
+     */
+    public Profile findByUsername(String username) {
+        Objects.requireNonNull(username);
+        return profileRepository.findByUsername(username).orElseThrow(
+                () -> new ProfileNotFoundException(username)
+        );
     }
 }

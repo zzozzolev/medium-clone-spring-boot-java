@@ -39,6 +39,7 @@ public class Article extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String title;
+    // ArticleService.SLUG_MAX_SIZE is depend on length of slug.
     @Column(nullable = false)
     private String slug;
     @Column(nullable = false, length = BODY_LENGTH)
@@ -68,7 +69,7 @@ public class Article extends BaseTimeEntity {
      */
     void setSlug(Slugify slugify, String title, int size, int maxSize) throws IllegalArgumentException {
         // Validate parameters.
-        Objects.requireNonNull(slugify);
+        Objects.requireNonNull(slugify, "slugify");
         if (StringUtils.isBlank(title)) {
             throw new IllegalArgumentException("title is blank.");
         }
