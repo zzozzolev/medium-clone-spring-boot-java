@@ -39,6 +39,7 @@ public class Article extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String title;
+    // ArticleService.SLUG_MAX_SIZE is depend on length of slug.
     @Column(nullable = false)
     private String slug;
     @Column(nullable = false, length = BODY_LENGTH)
