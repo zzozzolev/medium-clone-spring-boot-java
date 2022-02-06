@@ -29,6 +29,10 @@ class ArticleServiceTest {
     @Mock
     private Slugify slugify;
 
+    /*
+    create에 특별한 비즈니스 로직이 없어 mocking 로직만 들어간다.
+    따라서 테스트 되는 건 없다. 이후 로직이 추가되면 테스트될 예정.
+     */
     @Test
     public void testCreate() {
         // given
