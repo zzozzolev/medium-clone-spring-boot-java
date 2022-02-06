@@ -69,7 +69,7 @@ public class Article extends BaseTimeEntity {
      */
     void setSlug(Slugify slugify, String title, int size, int maxSize) throws IllegalArgumentException {
         // Validate parameters.
-        Objects.requireNonNull(slugify);
+        Objects.requireNonNull(slugify, "slugify");
         if (StringUtils.isBlank(title)) {
             throw new IllegalArgumentException("title is blank.");
         }
