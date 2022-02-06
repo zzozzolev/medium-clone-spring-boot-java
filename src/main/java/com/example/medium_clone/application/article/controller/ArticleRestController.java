@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/articles")
 public class ArticleRestController {
 
-    @PostMapping()
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Article createArticle(@RequestBody ArticleCreateDto dto) {
         // 임시 객체 반환
