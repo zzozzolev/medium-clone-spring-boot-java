@@ -2,6 +2,7 @@ package com.example.medium_clone.application.user.entity;
 
 import com.example.medium_clone.application.article.entity.Article;
 import com.example.medium_clone.application.common.entity.BaseTimeEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -18,6 +19,7 @@ public class Profile extends BaseTimeEntity {
     @Column(name = "profile_id")
     private Long id;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "author")
     private List<Article> articles = new ArrayList<>();
 
