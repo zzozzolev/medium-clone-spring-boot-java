@@ -5,6 +5,7 @@ import com.example.medium_clone.application.article.entity.Article;
 import com.example.medium_clone.application.article.repository.ArticleRepository;
 import com.example.medium_clone.application.article.service.ArticleService;
 import com.example.medium_clone.application.user.entity.Profile;
+import com.example.medium_clone.application.user.exception.ProfileNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.slugify.Slugify;
 import org.junit.jupiter.api.Test;
@@ -34,17 +35,7 @@ class ArticleRestControllerTest {
     @Test
     public void testCreateArticle() throws Exception {
         // given
-        String username = "username";
-        String title = "title";
-        String body = "body";
-        String desc = "";
-
-        ArticleCreateDto dto = new ArticleCreateDto();
-        dto.setUsername(username);
-        dto.setTitle(title);
-        dto.setBody(body);
-        dto.setDescription(desc);
-
+        ArticleCreateDto dto = getArticleCreateDto();
         Profile author = Profile.createProfile("bio", dto.getUsername());
         Article article = Article.createArticle(author, dto.getTitle(), dto.getBody(), dto.getDescription(), slugify, 10, 200);
 
@@ -64,6 +55,36 @@ class ArticleRestControllerTest {
 
     }
 
-    // TODO: 프로필 404 테스트 추가
+    @Test
+    public void testCreateArticleAuthorNotFound() throws Exception {
+        // given
+        ArticleCreateDto dto = getArticleCreateDto();
+        String requestBody = objectMapper.writeValueAsString(dto);
+
+        // mocking
+        when(articleService.create(any(ArticleCreateDto.class))).thenThrow(ProfileNotFoundException.class);
+
+        // then
+        mockMvc.perform(post(commonPath)
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    private ArticleCreateDto getArticleCreateDto() {
+        String username = "username";
+        String title = "title";
+        String body = "body";
+        String desc = "";
+
+        ArticleCreateDto dto = new ArticleCreateDto();
+        dto.setUsername(username);
+        dto.setTitle(title);
+        dto.setBody(body);
+        dto.setDescription(desc);
+
+        return dto;
+    }
 
 }
