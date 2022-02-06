@@ -25,6 +25,10 @@ public class ArticleService {
     // Article.slug length
     private static final int SLUG_MAX_SIZE = 255;
 
+    /**
+     * Create a article with given username and article info.
+     * @return saved article ID
+     */
     @Transactional
     public Long create(ArticleCreateDto dto) {
         Objects.requireNonNull(dto, "ArticleCreateDto");
