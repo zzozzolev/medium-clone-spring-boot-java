@@ -2,6 +2,7 @@ package com.example.medium_clone.application.article.service;
 
 import com.example.medium_clone.application.article.dto.ArticleCreateDto;
 import com.example.medium_clone.application.article.entity.Article;
+import com.example.medium_clone.application.article.repository.ArticleProjection;
 import com.example.medium_clone.application.article.repository.ArticleRepository;
 import com.example.medium_clone.application.user.entity.Profile;
 import com.example.medium_clone.application.user.service.ProfileService;
@@ -11,6 +12,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -62,5 +66,37 @@ class ArticleServiceTest {
 
         // then
         assertThat(createdId).isEqualTo(fakeId);
+    }
+
+    @Test
+    public void testGetArticlesAuthorNameNull() {
+        // given
+        String authorName = null;
+        int offset = 0;
+        int pageSize = 5;
+        Pageable pageable = PageRequest.of(offset, pageSize);
+        Page<ArticleProjection> page = mock(Page.class);
+
+        // mocking
+        when(articleRepository.findAllProjection(pageable)).thenReturn(page);
+
+        // then
+        articleService.getArticles(pageable, authorName);
+    }
+
+    @Test
+    public void testGetArticlesAuthorName() {
+        // given
+        String authorName = "test";
+        int offset = 0;
+        int pageSize = 5;
+        Pageable pageable = PageRequest.of(offset, pageSize);
+        Page<ArticleProjection> page = mock(Page.class);
+
+        // mocking
+        when(articleRepository.findAllByAuthorUsername(pageable, authorName)).thenReturn(page);
+
+        // then
+        articleService.getArticles(pageable, authorName);
     }
 }
