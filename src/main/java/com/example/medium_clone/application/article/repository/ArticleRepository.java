@@ -15,4 +15,10 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     Optional<Article> findBySlugFetchAuthor(@Param("slug") String slug);
 
     Page<ArticleProjection> findAllByAuthorUsername(Pageable pageable, @Param("authorName") String authorName);
+
+    @Query(value = "select a.article_id as id, a.title, a.slug, a.description, p.username as authorUsername "
+        + "from article a left join profile p",
+        countQuery = "select count(*) from article",
+        nativeQuery = true)
+    Page<ArticleProjection> findAllProjection(Pageable pageable);
 }

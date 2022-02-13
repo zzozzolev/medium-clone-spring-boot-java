@@ -72,4 +72,27 @@ class ArticleRepositoryTest {
         assertThat(articles.getNumber()).isEqualTo(page);
     }
 
+    @Test
+    public void findAllProjection() {
+        // given
+        String username = "test";
+        Profile profile = Profile.createProfile("test", username);
+        profileRepository.save(profile);
+
+        for (int i = 0; i < 10; ++i) {
+            Article article = Article.createArticle(profile, "test", "Test", "test", new Slugify(), 20, 100);
+            articleRepository.save(article);
+        }
+
+        int page = 0;
+        int size = 5;
+
+        // when
+        Page<ArticleProjection> articles = articleRepository.findAllProjection(PageRequest.of(page, size));
+
+        // then
+        assertThat(articles.getNumberOfElements()).isEqualTo(size);
+        assertThat(articles.getNumber()).isEqualTo(page);
+    }
+
 }
