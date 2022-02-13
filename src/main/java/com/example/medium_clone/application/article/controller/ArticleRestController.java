@@ -2,9 +2,12 @@ package com.example.medium_clone.application.article.controller;
 
 import com.example.medium_clone.application.article.dto.ArticleCreateDto;
 import com.example.medium_clone.application.article.entity.Article;
+import com.example.medium_clone.application.article.repository.ArticleProjection;
 import com.example.medium_clone.application.article.repository.ArticleRepository;
 import com.example.medium_clone.application.article.service.ArticleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +26,15 @@ public class ArticleRestController {
     public Article createArticle(@RequestBody ArticleCreateDto dto) {
         Long articleId = articleService.create(dto);
         return articleRepository.findById(articleId).orElseThrow(IllegalStateException::new);
+    }
+
+    /**
+     * Get ArticleProjection page.
+     * @return Page<ArticleProjection>
+     */
+    @GetMapping
+    public Page<ArticleProjection> getArticles(Pageable pageable, @RequestParam(required = false) String authorName) {
+        return articleService.getArticles(pageable, authorName);
     }
 
     /**

@@ -2,13 +2,17 @@ package com.example.medium_clone.application.article.service;
 
 import com.example.medium_clone.application.article.dto.ArticleCreateDto;
 import com.example.medium_clone.application.article.entity.Article;
+import com.example.medium_clone.application.article.repository.ArticleProjection;
 import com.example.medium_clone.application.article.repository.ArticleRepository;
 import com.example.medium_clone.application.user.entity.Profile;
 import com.example.medium_clone.application.user.service.ProfileService;
 import com.github.slugify.Slugify;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Objects;
 
@@ -51,5 +55,18 @@ public class ArticleService {
         Article savedArticle = articleRepository.save(article);
 
         return savedArticle.getId();
+    }
+
+    /**
+     * Get ArticleProjection page.
+     * Get articles of specified author if you pass authorName.
+     * @return Page<ArticleProjection>
+     */
+    public Page<ArticleProjection> getArticles(Pageable pageable, @RequestParam String authorName) {
+        if (authorName == null) {
+            return articleRepository.findAllProjection(pageable);
+        } else {
+            return articleRepository.findAllByAuthorUsername(pageable, authorName);
+        }
     }
 }
