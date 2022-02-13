@@ -57,6 +57,22 @@ class ArticleRestControllerTest {
     }
 
     @Test
+    public void testGetArticle() throws Exception {
+        // given
+        ArticleCreateDto dto = getArticleCreateDto();
+        Profile author = Profile.createProfile("bio", dto.getUsername());
+        Article article = Article.createArticle(author, dto.getTitle(), dto.getBody(), dto.getDescription(), slugify, 10, 200);
+        String slug = article.getSlug();
+
+        // mocking
+        when(articleRepository.findBySlug(slug)).thenReturn(Optional.of(article));
+
+        // then
+        mockMvc.perform(get(commonPath + "/" + slug))
+                .andExpect(status().isOk());
+    }
+
+    @Test
     public void testCreateArticleAuthorNotFound() throws Exception {
         // given
         ArticleCreateDto dto = getArticleCreateDto();
@@ -71,22 +87,6 @@ class ArticleRestControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
-    }
-
-    @Test
-    public void testGetArticle() throws Exception {
-        // given
-        ArticleCreateDto dto = getArticleCreateDto();
-        Profile author = Profile.createProfile("bio", dto.getUsername());
-        Article article = Article.createArticle(author, dto.getTitle(), dto.getBody(), dto.getDescription(), slugify, 10, 200);
-        String slug = article.getSlug();
-
-        // mocking
-        when(articleRepository.findBySlug(slug)).thenReturn(Optional.of(article));
-
-        // then
-        mockMvc.perform(get(commonPath + "/" + slug))
-                .andExpect(status().isOk());
     }
 
     private ArticleCreateDto getArticleCreateDto() {
