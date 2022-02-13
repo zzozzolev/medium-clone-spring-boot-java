@@ -2,6 +2,7 @@ package com.example.medium_clone.application.article.controller;
 
 import com.example.medium_clone.application.article.dto.ArticleCreateDto;
 import com.example.medium_clone.application.article.entity.Article;
+import com.example.medium_clone.application.article.repository.ArticleProjection;
 import com.example.medium_clone.application.article.repository.ArticleRepository;
 import com.example.medium_clone.application.article.service.ArticleService;
 import com.example.medium_clone.application.user.entity.Profile;
@@ -12,12 +13,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -100,6 +106,25 @@ class ArticleRestControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void testGetArticles() throws Exception {
+        // given
+        String authorName = "test";
+        int offset = 0;
+        int pageSize = 5;
+        Pageable pageable = PageRequest.of(offset, pageSize);
+        Page<ArticleProjection> page = mock(Page.class);
+
+        // mocking
+        when(articleRepository.findAllByAuthorUsername(pageable, authorName)).thenReturn(page);
+
+        // then
+        mockMvc.perform(get(commonPath).param("authorName", authorName)
+                        .param("pageSize", Integer.toString(pageSize))
+                        .param("offset", Integer.toString(offset)))
+                .andExpect(status().isOk());
     }
 
     private ArticleCreateDto getArticleCreateDto() {
