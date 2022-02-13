@@ -27,7 +27,7 @@ public class ArticleRestController {
 
     @GetMapping("/{slug}")
     public Article getArticle(@PathVariable String slug) {
-        return articleRepository.findBySlug(slug).orElseThrow(NoSuchElementException::new);
+        return articleRepository.findBySlugFetchAuthor(slug).orElseThrow(NoSuchElementException::new);
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
