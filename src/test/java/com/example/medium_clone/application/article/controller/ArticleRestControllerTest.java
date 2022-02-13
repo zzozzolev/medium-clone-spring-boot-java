@@ -73,6 +73,19 @@ class ArticleRestControllerTest {
     }
 
     @Test
+    public void testGetArticleNotFound() throws Exception {
+        // given
+        String slug = "not-found-123abc";
+
+        // mocking
+        when(articleRepository.findBySlug(slug)).thenReturn(Optional.empty());
+
+        // then
+        mockMvc.perform(get(commonPath + "/" + slug))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
     public void testCreateArticleAuthorNotFound() throws Exception {
         // given
         ArticleCreateDto dto = getArticleCreateDto();
