@@ -28,6 +28,10 @@ public class ArticleRestController {
         return articleRepository.findById(articleId).orElseThrow(IllegalStateException::new);
     }
 
+    /**
+     * Get ArticleProjection page.
+     * @return Page<ArticleProjection>
+     */
     @GetMapping
     public Page<ArticleProjection> getArticles(Pageable pageable, @RequestParam(required = false) String authorName) {
         return articleService.getArticles(pageable, authorName);
