@@ -20,6 +20,7 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ArticleRestController.class)
@@ -53,6 +54,35 @@ class ArticleRestControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
 
+    }
+
+    @Test
+    public void testGetArticle() throws Exception {
+        // given
+        ArticleCreateDto dto = getArticleCreateDto();
+        Profile author = Profile.createProfile("bio", dto.getUsername());
+        Article article = Article.createArticle(author, dto.getTitle(), dto.getBody(), dto.getDescription(), slugify, 10, 200);
+        String slug = article.getSlug();
+
+        // mocking
+        when(articleRepository.findBySlugFetchAuthor(slug)).thenReturn(Optional.of(article));
+
+        // then
+        mockMvc.perform(get(commonPath + "/" + slug))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetArticleNotFound() throws Exception {
+        // given
+        String slug = "not-found-123abc";
+
+        // mocking
+        when(articleRepository.findBySlugFetchAuthor(slug)).thenReturn(Optional.empty());
+
+        // then
+        mockMvc.perform(get(commonPath + "/" + slug))
+                .andExpect(status().isNotFound());
     }
 
     @Test
