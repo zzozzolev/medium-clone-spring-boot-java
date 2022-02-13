@@ -65,7 +65,7 @@ class ArticleRestControllerTest {
         String slug = article.getSlug();
 
         // mocking
-        when(articleRepository.findBySlug(slug)).thenReturn(Optional.of(article));
+        when(articleRepository.findBySlugFetchAuthor(slug)).thenReturn(Optional.of(article));
 
         // then
         mockMvc.perform(get(commonPath + "/" + slug))
@@ -78,7 +78,7 @@ class ArticleRestControllerTest {
         String slug = "not-found-123abc";
 
         // mocking
-        when(articleRepository.findBySlug(slug)).thenReturn(Optional.empty());
+        when(articleRepository.findBySlugFetchAuthor(slug)).thenReturn(Optional.empty());
 
         // then
         mockMvc.perform(get(commonPath + "/" + slug))
