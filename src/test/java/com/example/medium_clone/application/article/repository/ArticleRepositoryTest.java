@@ -73,7 +73,7 @@ class ArticleRepositoryTest {
     }
 
     @Test
-    public void findAllProjection() {
+    public void testFindAllProjection() {
         // given
         String username = "test";
         Profile profile = Profile.createProfile("test", username);
