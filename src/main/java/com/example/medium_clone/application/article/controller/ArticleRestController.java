@@ -29,8 +29,8 @@ public class ArticleRestController {
     }
 
     @GetMapping
-    public Page<ArticleProjection> getArticles(Pageable pageable, @RequestParam String authorName) {
-        return articleRepository.findAllByAuthorUsername(pageable, authorName);
+    public Page<ArticleProjection> getArticles(Pageable pageable, @RequestParam(required = false) String authorName) {
+        return articleService.getArticles(pageable, authorName);
     }
 
     /**

@@ -109,7 +109,7 @@ class ArticleRestControllerTest {
     }
 
     @Test
-    public void testGetArticles() throws Exception {
+    public void testGetArticlesAuthorName() throws Exception {
         // given
         String authorName = "test";
         int offset = 0;
@@ -118,10 +118,29 @@ class ArticleRestControllerTest {
         Page<ArticleProjection> page = mock(Page.class);
 
         // mocking
-        when(articleRepository.findAllByAuthorUsername(pageable, authorName)).thenReturn(page);
+        when(articleService.getArticles(pageable, authorName)).thenReturn(page);
 
         // then
         mockMvc.perform(get(commonPath).param("authorName", authorName)
+                        .param("pageSize", Integer.toString(pageSize))
+                        .param("offset", Integer.toString(offset)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetArticles() throws Exception {
+        // given
+        String authorName = null;
+        int offset = 0;
+        int pageSize = 5;
+        Pageable pageable = PageRequest.of(offset, pageSize);
+        Page<ArticleProjection> page = mock(Page.class);
+
+        // mocking
+        when(articleService.getArticles(pageable, authorName)).thenReturn(page);
+
+        // then
+        mockMvc.perform(get(commonPath)
                         .param("pageSize", Integer.toString(pageSize))
                         .param("offset", Integer.toString(offset)))
                 .andExpect(status().isOk());
