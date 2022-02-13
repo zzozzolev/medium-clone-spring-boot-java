@@ -57,6 +57,11 @@ public class ArticleService {
         return savedArticle.getId();
     }
 
+    /**
+     * Get ArticleProjection page.
+     * Get articles of specified author if you pass authorName.
+     * @return Page<ArticleProjection>
+     */
     public Page<ArticleProjection> getArticles(Pageable pageable, @RequestParam String authorName) {
         if (authorName == null) {
             return articleRepository.findAllProjection(pageable);
