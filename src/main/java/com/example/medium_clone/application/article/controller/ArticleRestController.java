@@ -25,6 +25,11 @@ public class ArticleRestController {
         return articleRepository.findById(articleId).orElseThrow(IllegalStateException::new);
     }
 
+    /**
+     * Get article by path variable slug.
+     *
+     * @return Article with its author which is Profile.
+     */
     @GetMapping("/{slug}")
     public Article getArticle(@PathVariable String slug) {
         return articleRepository.findBySlugFetchAuthor(slug).orElseThrow(NoSuchElementException::new);
