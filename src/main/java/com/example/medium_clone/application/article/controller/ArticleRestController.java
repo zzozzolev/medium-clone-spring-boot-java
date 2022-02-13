@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/articles")
@@ -23,4 +25,14 @@ public class ArticleRestController {
         return articleRepository.findById(articleId).orElseThrow(IllegalStateException::new);
     }
 
+    @GetMapping("/{slug}")
+    public Article getArticle(@PathVariable String slug) {
+        return articleRepository.findBySlug(slug).orElseThrow(NoSuchElementException::new);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NoSuchElementException.class)
+    void handleNoSuchElementException(NoSuchElementException exception) {
+
+    }
 }
