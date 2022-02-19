@@ -1,6 +1,7 @@
 package com.example.medium_clone.application.article.controller;
 
 import com.example.medium_clone.application.article.dto.ArticleCreateDto;
+import com.example.medium_clone.application.article.dto.ArticleUpdateDto;
 import com.example.medium_clone.application.article.entity.Article;
 import com.example.medium_clone.application.article.repository.ArticleProjection;
 import com.example.medium_clone.application.article.repository.ArticleRepository;
@@ -20,13 +21,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ArticleRestController.class)
@@ -144,6 +145,50 @@ class ArticleRestControllerTest {
                         .param("pageSize", Integer.toString(pageSize))
                         .param("offset", Integer.toString(offset)))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testUpdateArticle() throws Exception {
+        // given
+        String slug = "test-24nf1";
+        String updateTitle = "update";
+        ArticleUpdateDto dto = new ArticleUpdateDto();
+        dto.setTitle(updateTitle);
+
+        String body = objectMapper.writeValueAsString(dto);
+
+        // mocking
+        Long fakeId = 1L;
+        when(articleService.update(slug, dto)).thenReturn(fakeId);
+
+        // then
+        mockMvc.perform(patch(commonPath + "/" + slug)
+                .content(body)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void testUpdateArticleNotFound() throws Exception {
+        // given
+        String slug = "test-24nf1";
+        String updateTitle = "update";
+        ArticleUpdateDto dto = new ArticleUpdateDto();
+        dto.setTitle(updateTitle);
+
+        String body = objectMapper.writeValueAsString(dto);
+
+        // mocking
+        Long fakeId = 1L;
+        when(articleService.update(slug, dto)).thenThrow(NoSuchElementException.class);
+
+        // then
+        mockMvc.perform(patch(commonPath + "/" + slug)
+                        .content(body)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     private ArticleCreateDto getArticleCreateDto() {
