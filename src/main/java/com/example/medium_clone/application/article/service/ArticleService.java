@@ -88,4 +88,9 @@ public class ArticleService {
 
         return article.getId();
     }
+
+    @Transactional
+    public void delete(String slug) {
+        articleRepository.deleteBySlug(slug);
+    }
 }

@@ -23,4 +23,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
         countQuery = "select count(*) from article",
         nativeQuery = true)
     Page<ArticleProjection> findAllProjection(Pageable pageable);
+
+    void deleteBySlug(@Param("slug") String slug);
+
 }

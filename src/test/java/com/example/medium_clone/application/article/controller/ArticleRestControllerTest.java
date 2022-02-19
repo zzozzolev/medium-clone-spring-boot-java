@@ -191,6 +191,16 @@ class ArticleRestControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    public void testDeleteArticle() throws Exception{
+        // given
+        String slug = "test-138gbb";
+
+        // then
+        mockMvc.perform(delete(commonPath + "/" + slug))
+                .andExpect(status().isNoContent());
+    }
+
     private ArticleCreateDto getArticleCreateDto() {
         String username = "username";
         String title = "title";
