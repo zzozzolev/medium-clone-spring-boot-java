@@ -61,6 +61,12 @@ public class ArticleRestController {
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/{slug}")
+    public ResponseEntity<Article> deleteArticle(@PathVariable String slug) {
+        articleService.delete(slug);
+        return ResponseEntity.noContent().build();
+    }
+
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoSuchElementException.class)
     void handleNoSuchElementException(NoSuchElementException exception) {
