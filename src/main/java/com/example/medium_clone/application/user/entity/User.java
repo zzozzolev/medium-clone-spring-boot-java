@@ -11,6 +11,15 @@ import javax.persistence.*;
 @ToString(of = {"id", "email"})
 public class User extends BaseTimeEntity {
 
+    public static User createUser(String password, String email, Profile profile) {
+        User user = new User();
+        user.password = password;
+        user.email = email;
+        user.profile = profile;
+
+        return user;
+    }
+
     @Id @GeneratedValue
     @Column(name = "user_id")
     private Long id;
@@ -23,12 +32,4 @@ public class User extends BaseTimeEntity {
     @JoinColumn(name = "profile_id")
     private Profile profile;
 
-    public static User createUser(String password, String email, Profile profile) {
-        User user = new User();
-        user.password = password;
-        user.email = email;
-        user.profile = profile;
-
-        return user;
-    }
 }
