@@ -46,6 +46,21 @@ public class Article extends BaseTimeEntity {
     private String body;
     private String description;
 
+    public void setTitle(String title) {
+        Objects.requireNonNull(title, "title");
+        this.title = title;
+    }
+
+    public void setBody(String body) {
+        Objects.requireNonNull(body, "body");
+        this.body = body;
+    }
+
+    public void setDescription(String description) {
+        Objects.requireNonNull(description, "description");
+        this.description = description;
+    }
+
     /**
      * Set author to this article instance.
      * Add this article to author's article list.

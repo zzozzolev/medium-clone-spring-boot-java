@@ -1,6 +1,7 @@
 package com.example.medium_clone.application.article.controller;
 
 import com.example.medium_clone.application.article.dto.ArticleCreateDto;
+import com.example.medium_clone.application.article.dto.ArticleUpdateDto;
 import com.example.medium_clone.application.article.entity.Article;
 import com.example.medium_clone.application.article.repository.ArticleProjection;
 import com.example.medium_clone.application.article.repository.ArticleRepository;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
@@ -47,6 +49,16 @@ public class ArticleRestController {
     @GetMapping("/{slug}")
     public Article getArticle(@PathVariable String slug) {
         return articleRepository.findBySlugFetchAuthor(slug).orElseThrow(NoSuchElementException::new);
+    }
+
+    /**
+     * Update article which has given slug.
+     * @return Response entity of no content.
+     */
+    @PatchMapping("/{slug}")
+    public ResponseEntity<Article> updateArticle(@PathVariable String slug, @RequestBody ArticleUpdateDto dto) {
+        articleService.update(slug, dto);
+        return ResponseEntity.noContent().build();
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)

@@ -14,6 +14,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Query("select a from Article a left join fetch a.author where a.slug = :slug")
     Optional<Article> findBySlugFetchAuthor(@Param("slug") String slug);
 
+    Optional<Article> findBySlug(@Param("slug") String slug);
+
     Page<ArticleProjection> findAllByAuthorUsername(Pageable pageable, @Param("authorName") String authorName);
 
     @Query(value = "select a.article_id as id, a.title, a.slug, a.description, p.username as authorUsername "

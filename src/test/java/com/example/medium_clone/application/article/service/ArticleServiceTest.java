@@ -1,6 +1,7 @@
 package com.example.medium_clone.application.article.service;
 
 import com.example.medium_clone.application.article.dto.ArticleCreateDto;
+import com.example.medium_clone.application.article.dto.ArticleUpdateDto;
 import com.example.medium_clone.application.article.entity.Article;
 import com.example.medium_clone.application.article.repository.ArticleProjection;
 import com.example.medium_clone.application.article.repository.ArticleRepository;
@@ -15,6 +16,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -98,5 +101,40 @@ class ArticleServiceTest {
 
         // then
         articleService.getArticles(pageable, authorName);
+    }
+
+    @Test
+    public void testUpdateTitle() {
+        /*
+        title을 업데이트할 때 title이 제대로 바뀌는지 다른 프로퍼티는 null로 설정되지 않는지 확인한다.
+        또한, slug도 바뀌지 않는지 확인한다.
+         */
+
+        // given
+        String updateTitle = "update";
+
+        ArticleUpdateDto dto = new ArticleUpdateDto();
+        dto.setTitle(updateTitle);
+
+        Article article = getArticle();
+        String slug = article.getSlug();
+
+        // mocking
+        when(articleRepository.findBySlug(slug)).thenReturn(Optional.of(article));
+
+        // when
+        articleService.update(slug, dto);
+
+        // then
+        assertThat(article.getTitle()).isEqualTo(updateTitle);
+        assertThat(article.getBody()).isNotNull();
+        assertThat(article.getDescription()).isNotNull();
+        assertThat(article.getSlug()).isEqualTo(slug);
+    }
+
+    private Article getArticle() {
+        Profile profile = mock(Profile.class);
+        when(slugify.slugify(any(String.class))).thenReturn("slug");
+        return Article.createArticle(profile, "title", "body", "desc", slugify, 10, 20);
     }
 }
