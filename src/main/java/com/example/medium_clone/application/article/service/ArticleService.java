@@ -81,6 +81,8 @@ public class ArticleService {
         Article article = articleRepository.findBySlug(slug).orElseThrow(NoSuchElementException::new);
 
         dto.getBody().ifPresent(article::setBody);
+        // Don't modify slug.
+        // Slug is enough to identify the article.
         dto.getTitle().ifPresent(article::setTitle);
         dto.getDescription().ifPresent(article::setDescription);
 
