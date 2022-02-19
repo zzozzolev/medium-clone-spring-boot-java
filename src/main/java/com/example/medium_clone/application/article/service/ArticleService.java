@@ -1,6 +1,7 @@
 package com.example.medium_clone.application.article.service;
 
 import com.example.medium_clone.application.article.dto.ArticleCreateDto;
+import com.example.medium_clone.application.article.dto.ArticleUpdateDto;
 import com.example.medium_clone.application.article.entity.Article;
 import com.example.medium_clone.application.article.repository.ArticleProjection;
 import com.example.medium_clone.application.article.repository.ArticleRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 @Service
@@ -68,5 +70,20 @@ public class ArticleService {
         } else {
             return articleRepository.findAllByAuthorUsername(pageable, authorName);
         }
+    }
+
+    /**
+     * Update article which has given slug.
+     * @return article Id
+     */
+    @Transactional
+    public Long update(String slug, ArticleUpdateDto dto) {
+        Article article = articleRepository.findBySlug(slug).orElseThrow(NoSuchElementException::new);
+
+        dto.getBody().ifPresent(article::setBody);
+        dto.getTitle().ifPresent(article::setTitle);
+        dto.getDescription().ifPresent(article::setDescription);
+
+        return article.getId();
     }
 }
