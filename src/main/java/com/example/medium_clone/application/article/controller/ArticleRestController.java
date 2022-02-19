@@ -8,6 +8,8 @@ import com.example.medium_clone.application.article.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +35,7 @@ public class ArticleRestController {
      * @return Page<ArticleProjection>
      */
     @GetMapping
-    public Page<ArticleProjection> getArticles(Pageable pageable, @RequestParam(required = false) String authorName) {
+    public Page<ArticleProjection> getArticles(@SortDefault(sort="created_date", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(required = false) String authorName) {
         return articleService.getArticles(pageable, authorName);
     }
 
