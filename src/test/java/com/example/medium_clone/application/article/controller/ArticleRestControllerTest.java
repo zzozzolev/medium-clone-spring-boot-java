@@ -48,7 +48,15 @@ class ArticleRestControllerTest {
                 .bio("bio")
                 .username(dto.getUsername())
                 .build();
-        Article article = Article.createArticle(author, dto.getTitle(), dto.getBody(), dto.getDescription(), slugify, 10, 200);
+        Article article = Article.builder()
+                .author(author)
+                .title(dto.getTitle())
+                .body(dto.getBody())
+                .description(dto.getDescription())
+                .slugify(slugify)
+                .size(10)
+                .maxSize(200)
+                .build();
 
         String requestBody = objectMapper.writeValueAsString(dto);
 
@@ -74,7 +82,15 @@ class ArticleRestControllerTest {
                 .bio("bio")
                 .username(dto.getUsername())
                 .build();
-        Article article = Article.createArticle(author, dto.getTitle(), dto.getBody(), dto.getDescription(), slugify, 10, 200);
+        Article article = Article.builder()
+                .author(author)
+                .title(dto.getTitle())
+                .body(dto.getBody())
+                .description(dto.getDescription())
+                .slugify(slugify)
+                .size(10)
+                .maxSize(200)
+                .build();
         String slug = article.getSlug();
 
         // mocking

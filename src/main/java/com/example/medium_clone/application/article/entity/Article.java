@@ -3,6 +3,7 @@ package com.example.medium_clone.application.article.entity;
 import com.example.medium_clone.application.common.entity.BaseTimeEntity;
 import com.example.medium_clone.application.user.entity.Profile;
 import com.github.slugify.Slugify;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -17,17 +18,6 @@ import java.util.Objects;
 public class Article extends BaseTimeEntity {
 
     public static final int BODY_LENGTH = 255 * 4;
-
-    public static Article createArticle(Profile author, String title, String body, String description, Slugify slugify, int size, int maxSize) {
-        Article article = new Article();
-        article.setAuthor(author);
-        article.title = title;
-        article.setSlug(slugify, title, size, maxSize);
-        article.body = body;
-        article.description = description;
-
-        return article;
-    }
 
     @Id @GeneratedValue
     @Column(name = "article_id")
@@ -45,6 +35,17 @@ public class Article extends BaseTimeEntity {
     @Column(nullable = false, length = BODY_LENGTH)
     private String body;
     private String description;
+
+    protected Article(){}
+
+    @Builder
+    public Article(Profile author, String title, String body, String description, Slugify slugify, int size, int maxSize) {
+        setAuthor(author);
+        this.title = title;
+        setSlug(slugify, title, size, maxSize);
+        this.body = body;
+        this.description = description;
+    }
 
     public void setTitle(String title) {
         Objects.requireNonNull(title, "title");

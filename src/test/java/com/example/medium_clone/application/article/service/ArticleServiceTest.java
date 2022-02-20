@@ -135,6 +135,14 @@ class ArticleServiceTest {
     private Article getArticle() {
         Profile profile = mock(Profile.class);
         when(slugify.slugify(any(String.class))).thenReturn("slug");
-        return Article.createArticle(profile, "title", "body", "desc", slugify, 10, 20);
+        return Article.builder()
+                .author(profile)
+                .title("title")
+                .body("body")
+                .description("desc")
+                .slugify(slugify)
+                .size(10)
+                .maxSize(20)
+                .build();
     }
 }

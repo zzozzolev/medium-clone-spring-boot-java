@@ -31,7 +31,15 @@ class ArticleRepositoryTest {
                 .build();
         profileRepository.save(profile);
 
-        Article article = Article.createArticle(profile, "test", "Test", "test", new Slugify(), 20, 100);
+        Article article = Article.builder()
+                .author(profile)
+                .title("test")
+                .body("Test")
+                .description("test")
+                .slugify(new Slugify())
+                .size(20)
+                .maxSize(100)
+                .build();
         articleRepository.save(article);
     }
 
@@ -44,7 +52,15 @@ class ArticleRepositoryTest {
                 .build();
         profileRepository.save(profile);
 
-        Article article = Article.createArticle(profile, "test", "Test", "test", new Slugify(), 20, 100);
+        Article article = Article.builder()
+                .author(profile)
+                .title("test")
+                .body("Test")
+                .description("test")
+                .slugify(new Slugify())
+                .size(20)
+                .maxSize(100)
+                .build();
         articleRepository.save(article);
 
         // when
@@ -66,7 +82,15 @@ class ArticleRepositoryTest {
         profileRepository.save(profile);
 
         for (int i = 0; i < 10; ++i) {
-            Article article = Article.createArticle(profile, "test", "Test", "test", new Slugify(), 20, 100);
+            Article article = Article.builder()
+                    .author(profile)
+                    .title("test")
+                    .body("Test")
+                    .description("test")
+                    .slugify(new Slugify())
+                    .size(20)
+                    .maxSize(100)
+                    .build();
             articleRepository.save(article);
         }
 
@@ -92,7 +116,15 @@ class ArticleRepositoryTest {
         profileRepository.save(profile);
 
         for (int i = 0; i < 10; ++i) {
-            Article article = Article.createArticle(profile, "test", "Test", "test", new Slugify(), 20, 100);
+            Article article = Article.builder()
+                    .author(profile)
+                    .title("test")
+                    .body("Test")
+                    .description("test")
+                    .slugify(new Slugify())
+                    .size(20)
+                    .maxSize(100)
+                    .build();
             articleRepository.save(article);
         }
 
