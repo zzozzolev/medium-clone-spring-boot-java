@@ -1,6 +1,7 @@
 package com.example.medium_clone.application.user.entity;
 
 import com.example.medium_clone.application.common.entity.BaseTimeEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -23,12 +24,13 @@ public class User extends BaseTimeEntity {
     @JoinColumn(name = "profile_id")
     private Profile profile;
 
-    public static User createUser(String password, String email, Profile profile) {
-        User user = new User();
-        user.password = password;
-        user.email = email;
-        user.profile = profile;
+    protected User() {}
 
-        return user;
+    @Builder
+    public User(String password, String email, Profile profile) {
+        this.password = password;
+        this.email = email;
+        this.profile = profile;
     }
+
 }

@@ -46,13 +46,15 @@ public class ArticleService {
         Profile author = profileService.findByUsername(dto.getUsername());
 
         // Save Article
-        Article article = Article.createArticle(author,
-                dto.getTitle(),
-                dto.getBody(),
-                dto.getDescription(),
-                slugify,
-                RANDOM_STRING_SIZE,
-                SLUG_MAX_SIZE);
+        Article article = Article.builder()
+                .author(author)
+                .title(dto.getTitle())
+                .body(dto.getBody())
+                .description(dto.getDescription())
+                .slugify(slugify)
+                .size(RANDOM_STRING_SIZE)
+                .maxSize(SLUG_MAX_SIZE)
+                .build();
 
         Article savedArticle = articleRepository.save(article);
 

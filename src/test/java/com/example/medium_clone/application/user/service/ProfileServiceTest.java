@@ -90,6 +90,9 @@ class ProfileServiceTest {
     }
 
     private Profile getProfile(String username){
-        return Profile.createProfile("", username);
+        return Profile.builder()
+                .bio("")
+                .username(username)
+                .build();
     }
 }

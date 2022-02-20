@@ -18,13 +18,16 @@ public class UserService {
 
     @Transactional
     public Long join(UserRegisterDto registerDto) {
-        Profile profile = Profile.createProfile("", registerDto.getUsername());
+        Profile profile = Profile.builder()
+                .bio("")
+                .username(registerDto.getUsername())
+                .build();
 
-        User user = User.createUser(
-                    registerDto.getPassword(),
-                    registerDto.getEmail(),
-                    profile
-                );
+        User user = User.builder()
+                .password(registerDto.getPassword())
+                .email(registerDto.getEmail())
+                .profile(profile)
+                .build();
 
         User savedUser = userRepository.save(user);
         return savedUser.getId();

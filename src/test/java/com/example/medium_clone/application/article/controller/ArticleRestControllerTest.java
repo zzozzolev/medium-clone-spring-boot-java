@@ -44,8 +44,19 @@ class ArticleRestControllerTest {
     public void testCreateArticle() throws Exception {
         // given
         ArticleCreateDto dto = getArticleCreateDto();
-        Profile author = Profile.createProfile("bio", dto.getUsername());
-        Article article = Article.createArticle(author, dto.getTitle(), dto.getBody(), dto.getDescription(), slugify, 10, 200);
+        Profile author = Profile.builder()
+                .bio("bio")
+                .username(dto.getUsername())
+                .build();
+        Article article = Article.builder()
+                .author(author)
+                .title(dto.getTitle())
+                .body(dto.getBody())
+                .description(dto.getDescription())
+                .slugify(slugify)
+                .size(10)
+                .maxSize(200)
+                .build();
 
         String requestBody = objectMapper.writeValueAsString(dto);
 
@@ -67,8 +78,19 @@ class ArticleRestControllerTest {
     public void testGetArticle() throws Exception {
         // given
         ArticleCreateDto dto = getArticleCreateDto();
-        Profile author = Profile.createProfile("bio", dto.getUsername());
-        Article article = Article.createArticle(author, dto.getTitle(), dto.getBody(), dto.getDescription(), slugify, 10, 200);
+        Profile author = Profile.builder()
+                .bio("bio")
+                .username(dto.getUsername())
+                .build();
+        Article article = Article.builder()
+                .author(author)
+                .title(dto.getTitle())
+                .body(dto.getBody())
+                .description(dto.getDescription())
+                .slugify(slugify)
+                .size(10)
+                .maxSize(200)
+                .build();
         String slug = article.getSlug();
 
         // mocking

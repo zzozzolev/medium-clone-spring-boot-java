@@ -25,20 +25,42 @@ class ArticleRepositoryTest {
 
     @Test
     public void testSaveArticle() {
-        Profile profile = Profile.createProfile("test", "test");
+        Profile profile = Profile.builder()
+                .bio("test")
+                .username("test")
+                .build();
         profileRepository.save(profile);
 
-        Article article = Article.createArticle(profile, "test", "Test", "test", new Slugify(), 20, 100);
+        Article article = Article.builder()
+                .author(profile)
+                .title("test")
+                .body("Test")
+                .description("test")
+                .slugify(new Slugify())
+                .size(20)
+                .maxSize(100)
+                .build();
         articleRepository.save(article);
     }
 
     @Test
     public void testFindBySlugFetchAuthor() {
         // given
-        Profile profile = Profile.createProfile("test", "test");
+        Profile profile = Profile.builder()
+                .bio("test")
+                .username("test")
+                .build();
         profileRepository.save(profile);
 
-        Article article = Article.createArticle(profile, "test", "Test", "test", new Slugify(), 20, 100);
+        Article article = Article.builder()
+                .author(profile)
+                .title("test")
+                .body("Test")
+                .description("test")
+                .slugify(new Slugify())
+                .size(20)
+                .maxSize(100)
+                .build();
         articleRepository.save(article);
 
         // when
@@ -53,11 +75,22 @@ class ArticleRepositoryTest {
     public void testFindAllByAuthor() {
         // given
         String username = "test";
-        Profile profile = Profile.createProfile("test", username);
+        Profile profile = Profile.builder()
+                .bio("test")
+                .username(username)
+                .build();
         profileRepository.save(profile);
 
         for (int i = 0; i < 10; ++i) {
-            Article article = Article.createArticle(profile, "test", "Test", "test", new Slugify(), 20, 100);
+            Article article = Article.builder()
+                    .author(profile)
+                    .title("test")
+                    .body("Test")
+                    .description("test")
+                    .slugify(new Slugify())
+                    .size(20)
+                    .maxSize(100)
+                    .build();
             articleRepository.save(article);
         }
 
@@ -76,11 +109,22 @@ class ArticleRepositoryTest {
     public void testFindAllProjection() {
         // given
         String username = "test";
-        Profile profile = Profile.createProfile("test", username);
+        Profile profile = Profile.builder()
+                .bio("test")
+                .username(username)
+                .build();
         profileRepository.save(profile);
 
         for (int i = 0; i < 10; ++i) {
-            Article article = Article.createArticle(profile, "test", "Test", "test", new Slugify(), 20, 100);
+            Article article = Article.builder()
+                    .author(profile)
+                    .title("test")
+                    .body("Test")
+                    .description("test")
+                    .slugify(new Slugify())
+                    .size(20)
+                    .maxSize(100)
+                    .build();
             articleRepository.save(article);
         }
 
