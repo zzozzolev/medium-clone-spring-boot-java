@@ -20,11 +20,11 @@ public class UserService {
     public Long join(UserRegisterDto registerDto) {
         Profile profile = Profile.createProfile("", registerDto.getUsername());
 
-        User user = User.createUser(
-                    registerDto.getPassword(),
-                    registerDto.getEmail(),
-                    profile
-                );
+        User user = User.builder()
+                .password(registerDto.getPassword())
+                .email(registerDto.getEmail())
+                .profile(profile)
+                .build();
 
         User savedUser = userRepository.save(user);
         return savedUser.getId();

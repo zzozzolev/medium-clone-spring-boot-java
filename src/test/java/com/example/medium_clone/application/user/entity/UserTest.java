@@ -15,7 +15,11 @@ class UserTest {
         Profile profile = mock(Profile.class);
 
         // when
-        User createdUser = User.createUser(password, email, profile);
+        User createdUser = User.builder()
+                .password(password)
+                .email(email)
+                .profile(profile)
+                .build();
 
         // then
         assertThat(createdUser.getPassword()).isEqualTo(password);

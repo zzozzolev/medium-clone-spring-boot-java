@@ -1,6 +1,7 @@
 package com.example.medium_clone.application.user.entity;
 
 import com.example.medium_clone.application.common.entity.BaseTimeEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -10,15 +11,6 @@ import javax.persistence.*;
 @Getter
 @ToString(of = {"id", "email"})
 public class User extends BaseTimeEntity {
-
-    public static User createUser(String password, String email, Profile profile) {
-        User user = new User();
-        user.password = password;
-        user.email = email;
-        user.profile = profile;
-
-        return user;
-    }
 
     @Id @GeneratedValue
     @Column(name = "user_id")
@@ -31,5 +23,14 @@ public class User extends BaseTimeEntity {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id")
     private Profile profile;
+
+    protected User() {}
+
+    @Builder
+    public User(String password, String email, Profile profile) {
+        this.password = password;
+        this.email = email;
+        this.profile = profile;
+    }
 
 }

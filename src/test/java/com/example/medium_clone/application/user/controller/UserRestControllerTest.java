@@ -44,7 +44,11 @@ class UserRestControllerTest {
         String body = objectMapper.writeValueAsString(dto);
 
         Profile profile = Profile.createProfile(bio, username);
-        User user = User.createUser(password, email, profile);
+        User user = User.builder()
+                .password(password)
+                .email(email)
+                .profile(profile)
+                .build();
         Long fakeId = 1L;
 
         // mocking
