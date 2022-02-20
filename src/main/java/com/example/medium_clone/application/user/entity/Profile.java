@@ -3,6 +3,7 @@ package com.example.medium_clone.application.user.entity;
 import com.example.medium_clone.application.article.entity.Article;
 import com.example.medium_clone.application.common.entity.BaseTimeEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -27,13 +28,12 @@ public class Profile extends BaseTimeEntity {
     @Column(nullable = false)
     private String username;
 
+    protected Profile () {}
 
-    public static Profile createProfile(String bio, String username) {
-        Profile profile = new Profile();
-        profile.bio = bio;
-        profile.username = username;
-
-        return profile;
+    @Builder
+    public Profile(String bio, String username) {
+        this.bio = bio;
+        this.username = username;
     }
 
     public void changeBio(String bio) {

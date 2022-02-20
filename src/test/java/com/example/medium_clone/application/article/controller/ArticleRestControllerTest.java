@@ -44,7 +44,10 @@ class ArticleRestControllerTest {
     public void testCreateArticle() throws Exception {
         // given
         ArticleCreateDto dto = getArticleCreateDto();
-        Profile author = Profile.createProfile("bio", dto.getUsername());
+        Profile author = Profile.builder()
+                .bio("bio")
+                .username(dto.getUsername())
+                .build();
         Article article = Article.createArticle(author, dto.getTitle(), dto.getBody(), dto.getDescription(), slugify, 10, 200);
 
         String requestBody = objectMapper.writeValueAsString(dto);
@@ -67,7 +70,10 @@ class ArticleRestControllerTest {
     public void testGetArticle() throws Exception {
         // given
         ArticleCreateDto dto = getArticleCreateDto();
-        Profile author = Profile.createProfile("bio", dto.getUsername());
+        Profile author = Profile.builder()
+                .bio("bio")
+                .username(dto.getUsername())
+                .build();
         Article article = Article.createArticle(author, dto.getTitle(), dto.getBody(), dto.getDescription(), slugify, 10, 200);
         String slug = article.getSlug();
 

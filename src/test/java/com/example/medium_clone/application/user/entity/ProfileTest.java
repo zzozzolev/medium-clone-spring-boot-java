@@ -14,7 +14,10 @@ class ProfileTest {
         String username = "name";
 
         // when
-        Profile createdProfile = Profile.createProfile(bio, username);
+        Profile createdProfile = Profile.builder()
+                .bio(bio)
+                .username(username)
+                .build();
 
         // then
         Assertions.assertThat(createdProfile.getBio()).isEqualTo(bio);

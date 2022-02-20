@@ -25,7 +25,10 @@ class ArticleRepositoryTest {
 
     @Test
     public void testSaveArticle() {
-        Profile profile = Profile.createProfile("test", "test");
+        Profile profile = Profile.builder()
+                .bio("test")
+                .username("test")
+                .build();
         profileRepository.save(profile);
 
         Article article = Article.createArticle(profile, "test", "Test", "test", new Slugify(), 20, 100);
@@ -35,7 +38,10 @@ class ArticleRepositoryTest {
     @Test
     public void testFindBySlugFetchAuthor() {
         // given
-        Profile profile = Profile.createProfile("test", "test");
+        Profile profile = Profile.builder()
+                .bio("test")
+                .username("test")
+                .build();
         profileRepository.save(profile);
 
         Article article = Article.createArticle(profile, "test", "Test", "test", new Slugify(), 20, 100);
@@ -53,7 +59,10 @@ class ArticleRepositoryTest {
     public void testFindAllByAuthor() {
         // given
         String username = "test";
-        Profile profile = Profile.createProfile("test", username);
+        Profile profile = Profile.builder()
+                .bio("test")
+                .username(username)
+                .build();
         profileRepository.save(profile);
 
         for (int i = 0; i < 10; ++i) {
@@ -76,7 +85,10 @@ class ArticleRepositoryTest {
     public void testFindAllProjection() {
         // given
         String username = "test";
-        Profile profile = Profile.createProfile("test", username);
+        Profile profile = Profile.builder()
+                .bio("test")
+                .username(username)
+                .build();
         profileRepository.save(profile);
 
         for (int i = 0; i < 10; ++i) {

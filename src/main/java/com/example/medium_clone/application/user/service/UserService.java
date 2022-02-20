@@ -18,7 +18,10 @@ public class UserService {
 
     @Transactional
     public Long join(UserRegisterDto registerDto) {
-        Profile profile = Profile.createProfile("", registerDto.getUsername());
+        Profile profile = Profile.builder()
+                .bio("")
+                .username(registerDto.getUsername())
+                .build();
 
         User user = User.builder()
                 .password(registerDto.getPassword())

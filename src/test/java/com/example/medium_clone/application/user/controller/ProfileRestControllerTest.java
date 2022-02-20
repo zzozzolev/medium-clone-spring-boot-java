@@ -71,7 +71,10 @@ class ProfileRestControllerTest {
         ProfileUpdateDto dto = new ProfileUpdateDto();
         dto.setUsername(username);
 
-        Profile profile = Profile.createProfile(bio, username);
+        Profile profile = Profile.builder()
+                .bio(bio)
+                .username(username)
+                .build();
 
         // mocking
         when(profileRepository.findByUsername(username)).thenReturn(Optional.of(profile));
