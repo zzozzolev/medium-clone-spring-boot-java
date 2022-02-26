@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface UserQueryRepository extends JpaRepository<User, Long> {
-    @Query("select new com.example.medium_clone.application.user.dto.UserRegisterResponseDto(p.username, u.email) from User u join u.profile p")
+    @Query("select new com.example.medium_clone.application.user.dto.UserRegisterResponseDto(p.username, u.email) from User u join u.profile p where u.id = :user_id")
     Optional<UserRegisterResponseDto> findUserRegisterResponseDtoById(@Param("user_id") Long id);
 
 }
