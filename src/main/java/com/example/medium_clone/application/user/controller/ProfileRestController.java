@@ -1,9 +1,10 @@
 package com.example.medium_clone.application.user.controller;
 
+import com.example.medium_clone.application.user.dto.ProfileGetDto;
 import com.example.medium_clone.application.user.dto.ProfileUpdateDto;
 import com.example.medium_clone.application.user.entity.Profile;
 import com.example.medium_clone.application.user.exception.ProfileNotFoundException;
-import com.example.medium_clone.application.user.repository.ProfileRepository;
+import com.example.medium_clone.application.user.repository.ProfileQueryRepository;
 import com.example.medium_clone.application.user.service.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +16,11 @@ import org.springframework.web.bind.annotation.*;
 public class ProfileRestController {
 
     private final ProfileService profileService;
-    private final ProfileRepository profileRepository;
+    private final ProfileQueryRepository profileQueryRepository;
 
     @GetMapping("/{username}")
-    public Profile getProfile(@PathVariable String username) {
-        return profileRepository.findByUsername(username).orElseThrow(() -> new ProfileNotFoundException(username));
+    public ProfileGetDto getProfile(@PathVariable String username) {
+        return profileQueryRepository.findProfileGetDtoByUsername(username).orElseThrow(() -> new ProfileNotFoundException(username));
     }
 
     @PatchMapping("/{username}")

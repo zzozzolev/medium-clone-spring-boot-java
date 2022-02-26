@@ -1,8 +1,8 @@
 package com.example.medium_clone.application.user.controller;
 
 import com.example.medium_clone.application.user.dto.UserRegisterDto;
-import com.example.medium_clone.application.user.entity.User;
-import com.example.medium_clone.application.user.repository.UserRepository;
+import com.example.medium_clone.application.user.dto.UserRegisterResponseDto;
+import com.example.medium_clone.application.user.repository.UserQueryRepository;
 import com.example.medium_clone.application.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,12 +16,12 @@ import javax.validation.Valid;
 public class UserRestController {
 
     private final UserService userService;
-    private final UserRepository userRepository;
+    private final UserQueryRepository userQueryRepository;
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public User registerUser(@RequestBody @Valid UserRegisterDto dto) {
+    public UserRegisterResponseDto registerUser(@RequestBody @Valid UserRegisterDto dto) {
         Long memberId = userService.join(dto);
-        return userRepository.findById(memberId).orElseThrow(IllegalStateException::new);
+        return userQueryRepository.findUserRegisterResponseDtoById(memberId).orElseThrow(IllegalStateException::new);
     }
 }

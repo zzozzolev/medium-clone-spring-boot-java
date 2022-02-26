@@ -1,10 +1,9 @@
 package com.example.medium_clone.application.user.controller;
 
+import com.example.medium_clone.application.user.dto.ProfileGetDto;
 import com.example.medium_clone.application.user.dto.ProfileUpdateDto;
-import com.example.medium_clone.application.user.entity.Profile;
-import com.example.medium_clone.application.user.repository.ProfileRepository;
+import com.example.medium_clone.application.user.repository.ProfileQueryRepository;
 import com.example.medium_clone.application.user.service.ProfileService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ class ProfileRestControllerTest {
     @Autowired MockMvc mockMvc;
     @Autowired ObjectMapper objectMapper;
     @MockBean ProfileService profileService;
-    @MockBean ProfileRepository profileRepository;
+    @MockBean ProfileQueryRepository profileQueryRepository;
     private final String commonPath = "/api/profiles";
 
     @Test
@@ -71,13 +70,11 @@ class ProfileRestControllerTest {
         ProfileUpdateDto dto = new ProfileUpdateDto();
         dto.setUsername(username);
 
-        Profile profile = Profile.builder()
-                .bio(bio)
-                .username(username)
-                .build();
+        Long fakeId = 1L;
+        ProfileGetDto getDto = new ProfileGetDto(fakeId, bio, username);
 
         // mocking
-        when(profileRepository.findByUsername(username)).thenReturn(Optional.of(profile));
+        when(profileQueryRepository.findProfileGetDtoByUsername(username)).thenReturn(Optional.of(getDto));
 
         return username;
     }
