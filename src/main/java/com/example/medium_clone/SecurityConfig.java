@@ -1,6 +1,5 @@
 package com.example.medium_clone;
 
-import com.example.medium_clone.web.auth.PlainPasswordEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
