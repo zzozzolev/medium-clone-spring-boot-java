@@ -1,4 +1,4 @@
-package com.example.medium_clone.web.auth.filter;
+package com.example.medium_clone.web.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationServiceException;
