@@ -1,5 +1,6 @@
 package com.example.medium_clone;
 
+import com.example.medium_clone.web.auth.CustomLoginFailureHandler;
 import com.example.medium_clone.web.auth.CustomLoginSuccessHandler;
 import com.example.medium_clone.web.auth.CustomUsernamePasswordAuthenticationFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -36,6 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         filter.setAuthenticationManager(authenticationManager());
         filter.setUsernameParameter("email");
         filter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
+        filter.setAuthenticationFailureHandler(authenticationFailureHandler());
         return filter;
     }
 
@@ -46,6 +49,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() { return new CustomLoginSuccessHandler(); }
+
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler() { return new CustomLoginFailureHandler(); }
 
     @Bean
     public ObjectMapper objectMapper() { return new ObjectMapper(); }
