@@ -1,5 +1,6 @@
 package com.example.medium_clone;
 
+import com.example.medium_clone.web.auth.CustomLoginSuccessHandler;
 import com.example.medium_clone.web.auth.CustomUsernamePasswordAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -32,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         filter.setFilterProcessesUrl("/api/login");
         filter.setAuthenticationManager(authenticationManager());
         filter.setUsernameParameter("email");
+        filter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
         return filter;
     }
 
@@ -39,4 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler() { return new CustomLoginSuccessHandler(); }
 }
