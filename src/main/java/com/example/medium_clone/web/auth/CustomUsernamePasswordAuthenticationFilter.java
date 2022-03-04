@@ -1,6 +1,7 @@
 package com.example.medium_clone.web.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,7 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
+@RequiredArgsConstructor
 public class CustomUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
+    private final ObjectMapper objectMapper;
 
     /**
      * Process json or form request.
@@ -23,7 +27,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 
         try {
             if (request.getContentType().equals(MimeTypeUtils.APPLICATION_JSON_VALUE)) {
-                Map<String, String> requestMap = new ObjectMapper().readValue(request.getInputStream(), Map.class);
+                Map<String, String> requestMap = objectMapper.readValue(request.getInputStream(), Map.class);
                 email = requestMap.getOrDefault("email", "");
                 password = requestMap.getOrDefault("password", "");
             }

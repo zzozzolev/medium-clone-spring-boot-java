@@ -2,6 +2,7 @@ package com.example.medium_clone;
 
 import com.example.medium_clone.web.auth.CustomLoginSuccessHandler;
 import com.example.medium_clone.web.auth.CustomUsernamePasswordAuthenticationFilter;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -30,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     protected CustomUsernamePasswordAuthenticationFilter getAuthFilter() throws Exception{
-        CustomUsernamePasswordAuthenticationFilter filter = new CustomUsernamePasswordAuthenticationFilter();
+        CustomUsernamePasswordAuthenticationFilter filter = new CustomUsernamePasswordAuthenticationFilter(objectMapper());
         filter.setFilterProcessesUrl("/api/login");
         filter.setAuthenticationManager(authenticationManager());
         filter.setUsernameParameter("email");
@@ -45,4 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() { return new CustomLoginSuccessHandler(); }
+
+    @Bean
+    public ObjectMapper objectMapper() { return new ObjectMapper(); }
 }
