@@ -1,3 +1,8 @@
+server:
+  servlet:
+    session:
+      timeout: 30m
+
 spring:
   datasource:
     url: jdbc:h2:tcp://localhost/~/jam/tutorial/spring/medium_clone
