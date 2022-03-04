@@ -22,7 +22,7 @@ public class SessionLoginLogoutTest {
 
     @Autowired MockMvc mockMvc;
     @Autowired ObjectMapper objectMapper;
-    private final String path = "/api/login";
+    private static final String LOGIN_PATH = "/api/login";
     @Autowired UserService userService;
     private static final String TEST_USER_EMAIL = "test@test.com";
     private static final String TEST_USER_PASSWORD = "test";
@@ -46,7 +46,7 @@ public class SessionLoginLogoutTest {
                 TEST_USER_PASSWORD);
 
         // then
-        mockMvc.perform(post(path)
+        mockMvc.perform(post(LOGIN_PATH)
                 .content(requestBody)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -62,7 +62,7 @@ public class SessionLoginLogoutTest {
                 TEST_USER_PASSWORD);
 
         // then
-        mockMvc.perform(post(path)
+        mockMvc.perform(post(LOGIN_PATH)
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -78,10 +78,12 @@ public class SessionLoginLogoutTest {
                 "wrong");
 
         // then
-        mockMvc.perform(post(path)
+        mockMvc.perform(post(LOGIN_PATH)
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
     }
+
+
 }
