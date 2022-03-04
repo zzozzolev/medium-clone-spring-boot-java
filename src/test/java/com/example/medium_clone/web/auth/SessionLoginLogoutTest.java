@@ -36,7 +36,6 @@ public class SessionLoginLogoutTest {
         userService.join(dto);
     }
 
-    // TODO: 쿠키까지 확인
     @Test
     public void testLoginSuccess() throws Exception {
         // given
