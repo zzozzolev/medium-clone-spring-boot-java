@@ -2,6 +2,7 @@ package com.example.medium_clone;
 
 import com.example.medium_clone.web.auth.CustomLoginFailureHandler;
 import com.example.medium_clone.web.auth.CustomLoginSuccessHandler;
+import com.example.medium_clone.web.auth.CustomLogoutHandler;
 import com.example.medium_clone.web.auth.CustomUsernamePasswordAuthenticationFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -29,7 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                     .formLogin().disable()
-                .logout().logoutUrl("/api/logout");
+                .logout()
+                    .logoutUrl("/api/logout").logoutSuccessHandler(logoutSuccessHandler());
     }
 
     protected CustomUsernamePasswordAuthenticationFilter getAuthFilter() throws Exception{
@@ -52,6 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationFailureHandler authenticationFailureHandler() { return new CustomLoginFailureHandler(); }
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() { return new CustomLogoutHandler(); }
 
     @Bean
     public ObjectMapper objectMapper() { return new ObjectMapper(); }
