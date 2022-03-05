@@ -5,6 +5,7 @@ import com.example.medium_clone.web.auth.CustomLoginSuccessHandler;
 import com.example.medium_clone.web.auth.CustomLogoutHandler;
 import com.example.medium_clone.web.auth.CustomUsernamePasswordAuthenticationFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,6 +20,8 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired ObjectMapper objectMapper;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -36,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     protected CustomUsernamePasswordAuthenticationFilter getAuthFilter() throws Exception{
-        CustomUsernamePasswordAuthenticationFilter filter = new CustomUsernamePasswordAuthenticationFilter(objectMapper());
+        CustomUsernamePasswordAuthenticationFilter filter = new CustomUsernamePasswordAuthenticationFilter(objectMapper);
         filter.setFilterProcessesUrl("/api/login");
         filter.setAuthenticationManager(authenticationManager());
         filter.setUsernameParameter("email");
@@ -59,6 +62,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public LogoutSuccessHandler logoutSuccessHandler() { return new CustomLogoutHandler(); }
 
-    @Bean
-    public ObjectMapper objectMapper() { return new ObjectMapper(); }
 }
